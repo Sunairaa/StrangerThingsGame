@@ -9,6 +9,15 @@ class Monster {
         this.direction = direction;
         this.health = health;
         this.strength = strength;
+        this.readyToAttack = true;
+    }
+
+    toggleReadyToAttack() {
+        return this.readyToAttack = !this.readyToAttack;
+    }
+    
+    receiveAttack(strength) {
+        return this.health -= strength;
     }
 }
 
