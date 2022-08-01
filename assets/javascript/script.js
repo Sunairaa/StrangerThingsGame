@@ -13,6 +13,7 @@ let platformYPosition = 470;
 let platformHeight = 100;
 
 const healthBarImage = new Image();
+const powerBarImage = new Image();
 
 let elevenWidth = 100;
 let elevenHeight = 100;
@@ -103,6 +104,8 @@ window.onload = () => {
         // draw health bar
         healthBarImage.src = '/assets/images/healthbar-100.png';
         ctx.drawImage(healthBarImage, 25, 25, 200, 54);
+        powerBarImage.src = '/assets/images/powerbar-100.png';
+        ctx.drawImage(powerBarImage, 25, 80, 200, 54);
 
         // draw eleven character
         ctx.drawImage(eleven.image, eleven.xPosition, eleven.yPosition, eleven.width, eleven.height);
