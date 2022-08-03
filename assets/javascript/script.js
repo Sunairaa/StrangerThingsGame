@@ -1,13 +1,28 @@
-const startGameBtn = document.getElementById('start-game-btn');
+const startGameBtn = document.querySelectorAll('.start-game-btn');
 const startGameScreen = document.getElementById('start-game-container');
 const mainGameScreen = document.getElementById('main-game-container');
 const gameOverScreen = document.getElementById('game-over-container');
-const audio = new Audio('/assets/music/music.mp3');
+const displayFinalScore = document.getElementById('score');
+const displayHighestScore = document.getElementById('highscore');
+
+const themeAudio = new Audio('/assets/music/Stranger-Thing-theme-Song.mp3');
+const gameAudio = new Audio('/assets/music/Running_Up_That_Hill.mp3');
+const elevenAttackAudio = new Audio('/assets/music/scifi-laser.wav');
+const monsterBite = new Audio('/assets/music/monster-bite.ogg');
+const gameOverAudio = new Audio('/assets/music/game-over.wav');
+
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-let intervalId = 0;
-let score = 0;
+let intervalId;
+let scoreIntervalId;
+let elevenPowerIntervalId;
+let monsterCreateIntervalId;
+let snackIntervalId;
+let score;
+let highScore = 0;
 let isGameOver = false;
+let powerBallsArr;
+let monstersArray;
 
 let platformXPosition = 0;
 let platformYPosition = 470;
@@ -42,20 +57,50 @@ const eleven = new Eleven(
         "left"
     );
 
-// charge eleven power
-setInterval(() => {
-    if(eleven.power < 100) { 
-        eleven.power += 10
-    }             
-}, 2000);  
+const snackImage = new Image();
+snackImage.src = '/assets/images/eggo.png';
+let snack;
 
-const powerBallsArr = [];
+function resetGame() {
+    isGameOver = false;
+    powerBallsArr = [];
+    monstersArray = [];
+    score = 0;
+    eleven.xPosition = canvas.width/2 - elevenWidth/2;
+    eleven.yPosition =  platformYPosition - elevenHeight + 17;
+    eleven.health = 100;
+    eleven.power = 100;
+    snack = undefined;
 
-const monstersArray = [];
-setInterval(() => {
-    monstersArray.push(createMonster());
-}, 3000);
+    themeAudio.pause();
+    gameAudio.currentTime = 0;
+    gameAudio.play();
+    
+    // increases score at every second
+    scoreIntervalId = setInterval(() => {
+        score++;             
+    }, 1000);
 
+    // increases eleven's power every 2 seconds
+    elevenPowerIntervalId = setInterval(() => {
+        if(eleven.power < 100) { 
+            eleven.power += 10
+        }             
+    }, 2000);  
+
+    // create monster every 3 seconds
+    monsterCreateIntervalId = setInterval(() => {
+        monstersArray.push(createMonster());
+        new Audio('/assets/music/monster-growl.wav').play();
+    }, 3000);
+    
+    // create snack every 10 seconds
+    snackIntervalId = setInterval(() => {
+        if(snack === undefined) {
+            snack = createSnack();
+        }
+    }, 10000);
+}
 
 function updateHealthBar() {
     if (eleven.health > 80 && eleven.health <= 100) {
@@ -95,6 +140,18 @@ function updatePowerBar() {
     ctx.drawImage(powerBarImage, 25, 80, 200, 54);
 }
 
+function updateScoreDisplay() {
+    ctx.fillText(`Score:`, canvas.width-200, 50);
+    ctx.fillText(computeSixDigitScore(score), canvas.width-200, 90);
+    ctx.fillStyle = "red";
+    ctx.font = `30px Arcade`;
+}
+
+function computeSixDigitScore(score) {
+    score = "00000" + score;
+    return score.slice(score.length-6, score.length);
+}
+
 function createPowerBall() {
     if (eleven.power <= 0) {
         return;
@@ -106,6 +163,8 @@ function createPowerBall() {
     } else {
         powerBallPositionX = eleven.xPosition - 15;
     }
+    elevenAttackAudio.currentTime = 0;
+    elevenAttackAudio.play();
     return new PowerBall(powerBallPositionX, eleven.yPosition, 50, 50, eleven.direction, eleven.strength);
 }
 
@@ -135,22 +194,30 @@ function createMonster() {
     );
 }
 
+function createSnack() {
+    let snakeXPosition = Math.floor(Math.random() * (canvas.width - 100));
+    return new Snack(snackImage, snakeXPosition, 0, 50, 50, 25);
+}
+
 window.onload = () => {
     // play start screen music and show only splash screen
-    // audio.play();
+    
     startGameScreen.style.display = "flex";
     mainGameScreen.style.display = "none";
+    gameOverScreen.style.display = "none";
     canvas.style.display = "none";
+    themeAudio.currentTime = 13;
+    themeAudio.play();
     
     // when start game btn click hide splash screen and go to main game screen
-    startGameBtn.addEventListener('click', () => {
-        // audio.pause();
-        // score
-        setInterval(() => {
-            score++;             
-        }, 1000);
-        startGame();
-    });
+    startGameBtn.forEach(item => {
+        item.addEventListener('click', event => {
+            resetGame();
+            updateGame();
+        });
+        
+      })
+    
 
 
     //   left right movement of eleven
@@ -173,10 +240,11 @@ window.onload = () => {
     });
 
 
-    function startGame() {
-        //console.log('in start function')
+    function updateGame() {
+        console.log('in start function')
         startGameScreen.style.display = "none";
         mainGameScreen.style.display = "flex";
+        gameOverScreen.style.display = "none";
         canvas.style.display = "block";
 
         // draw background
@@ -185,8 +253,8 @@ window.onload = () => {
         // draw game platform
         ctx.drawImage(gamePlatformImage, platformXPosition, platformYPosition, canvas.width, platformHeight);
 
-        // score 
-        ctx.fillText(`Score: ${score}`, canvas.width-100, 50);
+        // update score 
+        updateScoreDisplay();
 
         // draw health bar
         updateHealthBar();
@@ -197,16 +265,41 @@ window.onload = () => {
         // draw eleven character
         ctx.drawImage(eleven.image, eleven.xPosition, eleven.yPosition, eleven.width, eleven.height);
 
+        // draw snack 
+        if(snack != undefined) {
+            ctx.drawImage(snack.image, snack.xPosition, snack.yPosition, snack.width, snack.height); 
+            if (snack.yPosition + snack.height < platformYPosition) {
+                snack.yPosition++; 
+            }
+            if (
+                eleven.xPosition < snack.xPosition + snack.width - 50 && 
+                eleven.xPosition + eleven.width - 50 > snack.xPosition &&
+                eleven.yPosition < snack.yPosition + snack.height
+                ) {
+                eleven.health += snack.refill;
+                snack = undefined;
+            }
+        }
+        
+
         // draw power ball
         for(let i = 0; i < powerBallsArr.length; i++) {
             ctx.drawImage(powerBallsArr[i].image, powerBallsArr[i].xPosition, powerBallsArr[i].yPosition, powerBallsArr[i].width, powerBallsArr[i].height);
-        
+            
             // power ball movement
             if(powerBallsArr[i].direction === "right") {
                 powerBallsArr[i].xPosition += 3;
             } else {
                 powerBallsArr[i].xPosition -= 3;
             }
+
+            // power ball canvas border check
+            if(powerBallsArr[i].xPosition + powerBallsArr[i].width < 0 || powerBallsArr[i].xPosition > canvas.width) {
+                powerBallsArr.splice(i,1);
+                // i--;
+                continue;
+            }
+
             for(let j = 0; j < monstersArray.length; j++) {
                 if (
                     powerBallsArr[i].xPosition < monstersArray[j].xPosition + monstersArray[j].width - 32 &&
@@ -216,7 +309,8 @@ window.onload = () => {
                     powerBallsArr.splice(i, 1);
                     if (monstersArray[j].health <= 0) {
                         monstersArray.splice(j, 1);
-                        score += 50;
+                        new Audio('/assets/music/scream.wav').play();
+                        score += 20;
                     }
                     break;
                 } 
@@ -228,7 +322,6 @@ window.onload = () => {
         for(let i = 0; i < monstersArray.length; i++) {
             ctx.drawImage(monstersArray[i].image, monstersArray[i].xPosition, monstersArray[i].yPosition, monstersArray[i].width, monstersArray[i].height);
             ctx.fillRect(monstersArray[i].xPosition+10, monstersArray[i].yPosition-15, monstersArray[i].health, 8);
-            ctx.fillStyle = "red";
             
             // monster movement
             if(monstersArray[i].xPosition > eleven.xPosition + eleven.width) {
@@ -250,7 +343,6 @@ window.onload = () => {
                 eleven.xPosition < monstersArray[i].xPosition + monstersArray[i].width - 32 &&
                 eleven.xPosition + eleven.width > monstersArray[i].xPosition
             ) {
-
                 // to make monster stop
                 if(monstersArray[i].direction === "right") {
                     monstersArray[i].xPosition -= 2;
@@ -261,26 +353,38 @@ window.onload = () => {
                 if (monstersArray[i].readyToAttack) {
                     console.log(eleven.receiveAttack(monstersArray[i].strength))
                     monstersArray[i].toggleReadyToAttack();
-                    let attackInterval = setInterval(() => {
+                    monsterBite.play();
+                    setTimeout(() => {
                         monstersArray[i].toggleReadyToAttack();
                     }, 3000);
                     
                     if (eleven.health <= 0) {
-                        clearInterval(attackInterval);
                         isGameOver = true;
                     }
                 }
             }
         }
 
-        intervalId = requestAnimationFrame(startGame);
+        intervalId = requestAnimationFrame(updateGame);
         if (isGameOver) {
+            gameOverAudio.play();
+            themeAudio.currentTime = 10;
+            themeAudio.play();
+            gameAudio.pause();
             cancelAnimationFrame(intervalId);
+            clearInterval(scoreIntervalId);
+            clearInterval(elevenPowerIntervalId);
+            clearInterval(monsterCreateIntervalId);
+            clearInterval(snackIntervalId);
+            // check highest score 
+            highScore = score > highScore ? score : highScore;
+
             canvas.style.display = "none";
             mainGameScreen.style.display = "none";
             startGameScreen.style.display = "none";
-            gameOverScreen.style.display = "block";
-            // audio.muted();
+            gameOverScreen.style.display = "flex";
+            displayFinalScore.innerText = computeSixDigitScore(score); 
+            displayHighestScore.innerHTML =  computeSixDigitScore(highScore);
         }
 
     }

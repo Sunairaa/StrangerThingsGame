@@ -5,8 +5,13 @@ html, body{
 }
 
 @font-face {
-    font-family: BanguiatBold;
-    src: url(/assets/fonts/strangerthings/BenguiatBold.ttf);
+    font-family: VpPixel;
+    src: url(/assets/fonts/VPPixel-Simplified.otf);
+}
+
+@font-face {
+    font-family: Arcade;
+    src: url(/assets/fonts/ka1.ttf);
 }
 
 #game-screen {
@@ -29,23 +34,77 @@ canvas {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
+    /* padding-top: 20%; */
 }
 
-#start-game-btn {
+.controls{
+    display: flex;
+    justify-content: center;
+    align-items: self-end;
+    width: 30%;
+    margin: 2% auto;
+    text-align: center;
+    color: white;
+    font-family: VpPixel;
+    margin-top: 5%;
+}
+
+
+.controls img{
+    width: 70%;
+    margin-right: 2px;
+}
+
+.controls p {
+    font-size: 20px;
+}
+
+.start-game-btn {
     padding: 1em 2em;
     border-radius: 0;
-    border: 2px solid #d50000;
+    border: 5px solid #d50000;
     background: transparent;
-    margin-top: -86px;
+    margin-top: 80px;
     color: #d50000;
-    font-size: 1em;
-    font-family: BanguiatBold;
+    font-size: 1.5em;
+    font-family: VpPixel;
     text-transform: uppercase;
+    letter-spacing: 0.2em;
 }
+
 
 #main-game-container {
     background: url(/assets/images/background.jpg) no-repeat center center ;
     width: 90vw;
     height: 90vh;
 }
+
+#game-over-container {
+    background: url(/assets/images/background.jpg) no-repeat center center ;
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: arcade;
+    color: red;
+}
+
+#gameover-msg {
+    letter-spacing: 0.2em;
+    font-size: 100px;
+}
+
+#score-block, #high-score-block{
+    font-size: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 80vw;
+    margin-bottom: 0.5em;
+}
+
+#highscore, #score {
+    color: white;
+}
+

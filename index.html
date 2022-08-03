@@ -10,8 +10,21 @@
 <body>
     <section id="game-screen">
         <section id="start-game-container">
-            <img src="assets/images/strangerthings-title.png">
-            <button id="start-game-btn">Start Game</button>
+            <img src="assets/images/strangerthings-title1.png">
+            <button class="start-game-btn">Start Game</button>
+            <div class="controls">
+                <div>
+                    <img src="assets/images/arrowkeys.png">
+                    <p>Movement</p>
+                </div>
+                <div>
+                    <img src="assets/images/space-key.png">
+                    <p>Attack</p>
+                </div>
+                
+                
+            </div>
+            
         </section>
 
         <section id="main-game-container">
@@ -19,12 +32,25 @@
         </section>
 
         <section id="game-over-container">
-
+            <h1 id="gameover-msg">Game Over</h1>
+            <div id="score-block">
+                <div>Your Score: </div>
+                <div id="score">000000</div> 
+            </div>
+            <div id="high-score-block">   
+                <div>High Score: </div>
+                <div id="highscore">000000</div>
+            </div>
+            <!-- <div class="button3D start-game-btn">
+                <a href="#">Play Again?</a>
+            </div> -->
+            <button class="start-game-btn">Play Again?</button>
         </section>
     </section>
 
     <script src="assets/javascript/Eleven.js"></script>
     <script src="assets/javascript/Monster.js"></script>
+    <script src="assets/javascript/Snack.js"></script>
     <script src="assets/javascript/script.js"></script>
 </body>
 </html>
