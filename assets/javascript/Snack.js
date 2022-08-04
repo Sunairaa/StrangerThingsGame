@@ -8,7 +8,7 @@ class Snack {
         this.yPosition = 0;
         this.width = 50;
         this.height = 50;
-        this.refill = 25;
+        this.refill = 50;
     }
 
     

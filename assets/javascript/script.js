@@ -8,7 +8,7 @@ const musicBtn = document.getElementById('music-btn');
 const musicImg = document.getElementById('music-img');
 
 const themeAudio = new Audio('assets/music/Stranger-Thing-theme-Song.mp3');
-themeAudio.currentTime = 13;
+themeAudio.currentTime = 20;
 const gameAudio = new Audio('assets/music/Running_Up_That_Hill.mp3');
 const elevenAttackAudio = new Audio('assets/music/scifi-laser.wav');
 const elevenEatingAudio = new Audio('assets/music/eating.mp3');
@@ -69,18 +69,25 @@ function resetGame() {
     // increases eleven's power every 2 seconds 
     eleven.setPowerInterval();
 
+    monsterCreateIntervalId1 = createMonsterInterval(3000)
+    monsterCreateIntervalId2 = createMonsterInterval(5000)
+
     // create monster every 3 seconds
-    monsterCreateIntervalId = setInterval(() => {
-        monstersArray.push(createMonster());
-        monsterGrowlAudio.play();
-    }, 3000);
+    function createMonsterInterval(interval) {
+        return setInterval(() => {
+            let monster = createMonster();
+            monstersArray.push(monster);
+            monsterGrowlAudio.play();
+            monster.move();
+        }, interval);
+    }
     
     // create snack every 10 seconds
     snackIntervalId = setInterval(() => {
         if(snack === undefined) {
             snack = createSnack();
         }
-    }, 10000);
+    }, 20000);
 }
 
 function gameOver() {
@@ -92,7 +99,8 @@ function gameOver() {
     clearInterval(scoreIntervalId);
     // clear power interval
     eleven.clearPowerInterval();
-    clearInterval(monsterCreateIntervalId);
+    clearInterval(monsterCreateIntervalId1);
+    clearInterval(monsterCreateIntervalId2);
     clearInterval(snackIntervalId);
     // check highest score 
     highScore = score > highScore ? score : highScore;
@@ -273,7 +281,6 @@ window.onload = () => {
             monstersArray[i].draw();
             monstersArray[i].drawHealthBar();
             monstersArray[i].changeDirection(eleven.xPosition, eleven.width);
-            monstersArray[i].move();
 
             // eleven collision with monsters
             if (

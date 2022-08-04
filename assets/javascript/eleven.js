@@ -21,7 +21,7 @@ class Eleven {
         if (this.xPosition + this.width < canvasWidth) {
             this.direction = "right";
             this.image.src = 'assets/images/eleven-right.png';
-            this.xPosition += 4;
+            this.xPosition += 6;
         }
     }
 
@@ -29,7 +29,7 @@ class Eleven {
         if(this.xPosition > 0) {
             this.direction = "left";
             this.image.src = 'assets/images/eleven-left.png';
-            this.xPosition -= 4;
+            this.xPosition -= 6;
         } 
     }
 

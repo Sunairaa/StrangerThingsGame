@@ -52,11 +52,13 @@ class Monster {
     }
 
     move() {
-        if (this.direction === "right") {
-            this.xPosition += 2;
-        } else {
-            this.xPosition -= 2;
-        }
+        this.moveIntervalId = setInterval(() => {
+            if (this.direction === "right") {
+                this.xPosition += 0.5;
+            } else {
+                this.xPosition -= 0.5;
+            }            
+        }, 1);
     }
 
     changeDirection(elevenXPosition, elevenWidth) {
