@@ -14,6 +14,7 @@ const monsterBiteAudio = new Audio('assets/music/monster-bite.ogg');
 const gameOverAudio = new Audio('assets/music/game-over.wav');
 
 const canvas = document.querySelector('canvas');
+canvas.width = window.innerWidth/2;
 const ctx = canvas.getContext('2d');
 let intervalId;
 let scoreIntervalId;
@@ -169,7 +170,7 @@ window.onload = () => {
         startGameScreen.style.display = "none";
         mainGameScreen.style.display = "flex";
         gameOverScreen.style.display = "none";
-        canvas.style.display = "block";
+        canvas.style.display = "flex";
 
         // draw background
         ctx.drawImage(background,0,0, canvas.width, canvas.height);

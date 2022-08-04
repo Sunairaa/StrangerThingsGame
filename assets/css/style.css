@@ -14,6 +14,10 @@ html, body{
     src: url(../fonts/ka1.ttf);
 }
 
+#game-title {
+    padding-top: 3em;
+}
+
 #game-screen {
     background-color: white;
     height: 100vh;
@@ -22,6 +26,10 @@ html, body{
     align-items: center;
 }
 
+/* #canvas {
+    width: 90%;
+    height: 90%;
+} */
 canvas {
     border: 1px solid white;
 }
@@ -55,7 +63,7 @@ canvas {
 }
 
 .controls p {
-    font-size: 20px;
+    font-size: 1.5em;
 }
 
 .start-game-btn {
@@ -63,7 +71,7 @@ canvas {
     border-radius: 0;
     border: 5px solid #d50000;
     background: transparent;
-    margin-top: 80px;
+    margin-top: 1em;
     color: #d50000;
     font-size: 1.5em;
     font-family: VpPixel;
@@ -73,9 +81,9 @@ canvas {
 
 
 #main-game-container {
-    background: url(../images/background.jpg) no-repeat center center ;
-    width: 90vw;
-    height: 90vh;
+    /* background: url(../images/background.jpg) no-repeat center center ; */
+    width: 90%; 
+    height: 90%; 
 }
 
 #game-over-container {
@@ -91,11 +99,11 @@ canvas {
 
 #gameover-msg {
     letter-spacing: 0.2em;
-    font-size: 100px;
+    font-size: 4em;
 }
 
 #score-block, #high-score-block{
-    font-size: 40px;
+    font-size: 1.5em;
     display: flex;
     justify-content: space-evenly;
     width: 80vw;
