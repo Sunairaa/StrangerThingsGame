@@ -8,40 +8,44 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-    <!-- <section id="game-screen"> -->
-        <section id="start-game-container">
-            <img src="assets/images/strangerthings-title1.png" id="game-title">
-            <button class="start-game-btn">Start Game</button>
-            <div class="controls">
-                <div>
-                    <img src="assets/images/arrowkeys.png">
-                    <p>Movement</p>
-                </div>
-                <div>
-                    <img src="assets/images/space-key.png">
-                    <p>Attack</p>
-                </div>           
-            </div>        
-        </section>
-
-        <section id="main-game-container">
-            <canvas id="canvas"></canvas>
-        </section>
-
-        <section id="game-over-container">
-            <h1 id="gameover-msg">Game Over</h1>
-            <div id="score-block">
-                <div>Your Score: </div>
-                <div id="score">000000</div> 
+    <!-- Splash screen -->
+    <section id="start-game-container">
+        <button id="music-btn">
+            <img src="assets/images/no-music.png" id="music-img">
+        </button>
+        <img src="assets/images/strangerthings-title1.png" id="game-title">
+        <button class="start-game-btn">Start Game</button>
+        <div class="controls">
+            <div>
+                <img src="assets/images/arrowkeys.png">
+                <p>Movement</p>
             </div>
-            <div id="high-score-block">   
-                <div>High Score: </div>
-                <div id="highscore">000000</div>
-            </div>
-            <button class="start-game-btn">Play Again?</button>
-        </section>
-    <!-- </section> -->
+            <div>
+                <img src="assets/images/space-key.png">
+                <p>Attack</p>
+            </div>           
+        </div>        
+    </section>
 
+    <!-- Game Screen -->
+    <section id="main-game-container">
+        <canvas id="canvas"></canvas>
+    </section>
+
+    <!-- Game Over Screen -->
+    <section id="game-over-container">
+        <h1 id="gameover-msg">Game Over</h1>
+        <div id="score-block">
+            <div>Your Score: </div>
+            <div id="score">000000</div> 
+        </div>
+        <div id="high-score-block">   
+            <div>High Score: </div>
+            <div id="highscore">000000</div>
+        </div>
+        <button class="start-game-btn">Play Again?</button>
+    </section>
+    
     <script src="assets/javascript/eleven.js"></script>
     <script src="assets/javascript/monster.js"></script>
     <script src="assets/javascript/Snack.js"></script>

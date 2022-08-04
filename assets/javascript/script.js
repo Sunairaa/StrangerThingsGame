@@ -4,8 +4,11 @@ const mainGameScreen = document.getElementById('main-game-container');
 const gameOverScreen = document.getElementById('game-over-container');
 const displayFinalScore = document.getElementById('score');
 const displayHighestScore = document.getElementById('highscore');
+const musicBtn = document.getElementById('music-btn');
+const musicImg = document.getElementById('music-img');
 
 const themeAudio = new Audio('assets/music/Stranger-Thing-theme-Song.mp3');
+themeAudio.currentTime = 13;
 const gameAudio = new Audio('assets/music/Running_Up_That_Hill.mp3');
 const elevenAttackAudio = new Audio('assets/music/scifi-laser.wav');
 const elevenEatingAudio = new Audio('assets/music/eating.mp3');
@@ -26,6 +29,7 @@ let highScore = localStorage.getItem('Highscore');
 let isGameOver = false;
 let powerBallsArr;
 let monstersArray;
+let sound = false;
 
 // game platform
 let platformHeight = 100;
@@ -137,14 +141,26 @@ function createSnack() {
     return new Snack(canvas.width);
 }
 
+function playSoundOnStartScreen() {
+    sound = !sound;
+    if(sound) {
+        musicImg.src = 'assets/images/music.png'; 
+        themeAudio.play();
+    } else {
+        musicImg.src = 'assets/images/no-music.png'; 
+        themeAudio.pause();
+    }
+}
+
 window.onload = () => {
     // play start screen music and show only splash screen
     startGameScreen.style.display = "flex";
     mainGameScreen.style.display = "none";
     gameOverScreen.style.display = "none";
     canvas.style.display = "none";
-    themeAudio.currentTime = 13;
-    themeAudio.play();
+    
+
+    musicBtn.addEventListener('click', playSoundOnStartScreen);
     
     // when start game btn click hide splash screen and go to main game screen
     startGameBtn.forEach(item => {
