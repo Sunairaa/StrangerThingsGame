@@ -110,7 +110,7 @@ canvas {
     font-size: 2em;
     display: flex;
     justify-content: space-evenly;
-    width: 80vw;
+    width: 50%;
     margin-bottom: 0.5em;
 }
 
