@@ -15,6 +15,7 @@ const gameOverAudio = new Audio('assets/music/game-over.wav');
 
 const canvas = document.querySelector('canvas');
 canvas.width = screen.width;
+canvas.height = screen.height;
 const ctx = canvas.getContext('2d');
 let intervalId;
 let scoreIntervalId;
@@ -27,9 +28,10 @@ let powerBallsArr;
 let monstersArray;
 
 // game platform
-let platformXPosition = 0;
-let platformYPosition = 470;
 let platformHeight = 100;
+let platformXPosition = 0;
+let platformYPosition = screen.height-platformHeight;
+
 
 const gamePlatformImage = new Image();
 gamePlatformImage.src = 'assets/images/game-platform.png';
