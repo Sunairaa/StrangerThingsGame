@@ -1,7 +1,7 @@
 class Snack {
     constructor(canvasWidth) {
         const snackImage = new Image();
-        snackImage.src = '/assets/images/eggo.png';
+        snackImage.src = 'assets/images/eggo.png';
 
         this.image = snackImage;
         this.xPosition = Math.floor(Math.random() * (canvasWidth - 100));

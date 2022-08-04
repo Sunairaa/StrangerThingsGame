@@ -10,8 +10,8 @@ class MonsterType {
     }
 }
 
-const demogorgenType = new MonsterType("demogorgen", "/assets/images/demogorgen-left.png", "/assets/images/demogorgen-right.png", 150, 130, 100, 20);
-const demodogType = new MonsterType("demodog", "/assets/images/demodog-left.png", "/assets/images/demodog-right.png", 80, 80, 50, 10);
+const demogorgenType = new MonsterType("demogorgen", "assets/images/demogorgen-left.png", "assets/images/demogorgen-right.png", 150, 130, 100, 20);
+const demodogType = new MonsterType("demodog", "assets/images/demodog-left.png", "assets/images/demodog-right.png", 80, 80, 50, 10);
 const monsterTypes = [demogorgenType, demodogType];
 const monsterDirection = ["right", "left"];
 

@@ -5,13 +5,13 @@ const gameOverScreen = document.getElementById('game-over-container');
 const displayFinalScore = document.getElementById('score');
 const displayHighestScore = document.getElementById('highscore');
 
-const themeAudio = new Audio('/assets/music/Stranger-Thing-theme-Song.mp3');
-const gameAudio = new Audio('/assets/music/Running_Up_That_Hill.mp3');
-const elevenAttackAudio = new Audio('/assets/music/scifi-laser.wav');
-const elevenEatingAudio = new Audio('/assets/music/eating.mp3');
-const monsterGrowlAudio = new Audio('/assets/music/monster-growl.wav');
-const monsterBiteAudio = new Audio('/assets/music/monster-bite.ogg');
-const gameOverAudio = new Audio('/assets/music/game-over.wav');
+const themeAudio = new Audio('assets/music/Stranger-Thing-theme-Song.mp3');
+const gameAudio = new Audio('assets/music/Running_Up_That_Hill.mp3');
+const elevenAttackAudio = new Audio('assets/music/scifi-laser.wav');
+const elevenEatingAudio = new Audio('assets/music/eating.mp3');
+const monsterGrowlAudio = new Audio('assets/music/monster-growl.wav');
+const monsterBiteAudio = new Audio('assets/music/monster-bite.ogg');
+const gameOverAudio = new Audio('assets/music/game-over.wav');
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -31,10 +31,10 @@ let platformYPosition = 470;
 let platformHeight = 100;
 
 const gamePlatformImage = new Image();
-gamePlatformImage.src = '/assets/images/game-platform.png';
+gamePlatformImage.src = 'assets/images/game-platform.png';
 
 const background = new Image();
-background.src = '/assets/images/background.jpg';
+background.src = 'assets/images/background.jpg';
 
 const eleven = new Eleven( canvas.width/2 - this.width/2, platformYPosition - this.height + 17);
 
@@ -240,7 +240,7 @@ window.onload = () => {
                     powerBallsArr.splice(i, 1);
                     if (monstersArray[j].health <= 0) {
                         monstersArray.splice(j, 1);
-                        new Audio('/assets/music/scream.wav').play();
+                        new Audio('assets/music/scream.wav').play();
                         score += 20;
                     }
                     break;
