@@ -14,7 +14,7 @@ const monsterBiteAudio = new Audio('assets/music/monster-bite.ogg');
 const gameOverAudio = new Audio('assets/music/game-over.wav');
 
 const canvas = document.querySelector('canvas');
-canvas.width = window.innerWidth/2;
+canvas.width = screen.width;
 const ctx = canvas.getContext('2d');
 let intervalId;
 let scoreIntervalId;

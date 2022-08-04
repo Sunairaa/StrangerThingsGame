@@ -82,8 +82,8 @@ canvas {
 
 #main-game-container {
     /* background: url(../images/background.jpg) no-repeat center center ; */
-    width: 90%; 
-    height: 90%; 
+    /* width: 60%;  */
+    height: 80%; 
 }
 
 #game-over-container {
