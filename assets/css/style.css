@@ -18,21 +18,6 @@ html, body{
     padding-top: 3em;
 }
 
-/* #game-screen {
-    background-color: white;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-/* #canvas {
-    width: 90%;
-    height: 90%;
-} */
-/* canvas {
-    border: 1px solid white;
-} */
 canvas {
     background-color: #ccc;
     display: block;
@@ -42,13 +27,17 @@ canvas {
     right: 0;
     bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
 }
 
 #start-game-container {
-    background: url(../images/background.jpg) no-repeat center center ;
-    width: 90vw;
-    height: 90vh;
+    background: url(../images/background.jpg) no-repeat center center; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,17 +81,15 @@ canvas {
 
 
 #main-game-container {
-    /* background: url(../images/background.jpg) no-repeat center center ; */
-    /* width: 60%;  */
-    width: 100٪;
-    height: 100٪;
+    width: 100%;
+    height: 100vh;
     margin: 0; 
 }
 
 #game-over-container {
     background: url(../images/background.jpg) no-repeat center center ;
-    width: 90vw;
-    height: 90vh;
+    width: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -126,8 +113,3 @@ canvas {
 #highscore, #score {
     color: white;
 }
-/* 
-#canvas {
-    width: 90vw;
-    height: 90vw;
-} */
