@@ -8,13 +8,22 @@ const musicBtn = document.getElementById('music-btn');
 const musicImg = document.getElementById('music-img');
 
 const themeAudio = new Audio('assets/music/Stranger-Thing-theme-Song.mp3');
-themeAudio.currentTime = 20;
 const gameAudio = new Audio('assets/music/Running_Up_That_Hill.mp3');
 const elevenAttackAudio = new Audio('assets/music/scifi-laser.wav');
 const elevenEatingAudio = new Audio('assets/music/eating.mp3');
 const monsterGrowlAudio = new Audio('assets/music/monster-growl.wav');
 const monsterBiteAudio = new Audio('assets/music/monster-bite.ogg');
 const gameOverAudio = new Audio('assets/music/game-over.wav');
+themeAudio.currentTime = 20;
+const max = 0.3;
+const min = 0.1;
+themeAudio.volume = max;
+gameAudio.volume = min;
+elevenAttackAudio.volume = max;
+elevenEatingAudio.volume = max;
+monsterGrowlAudio.volume = max;
+monsterBiteAudio.volume = min;
+gameOverAudio.volume = min;
 
 const canvas = document.querySelector('canvas');
 canvas.width = screen.width;
