@@ -7,23 +7,26 @@ Main objective of game is to kill monsters 👹, survive as long as you can and 
 
 ## MVP
 - Design splash screen with start game button.
-- Draw canvas for game scree.
+- Draw canvas for game screen.
 - Draw game platform.
 - Draw main character named Eleven.
 - Generate randomly 2 types of monsters they may come randomly from left or right direction.
-- Eleven can kill monster with power ball ball.
+- Eleven can kill monster with power ball.
 - Maintain health bar and power bar for main character.
 - Increase power bar by some time.
 - Maintain score board.
 - Maintain health for monsters.
 - Game over when main character's health is zero.
-- Design game over page with restart game again.
+- Design game over page with restart game again button.
 
-## Backlog
+## Bonus
 - Add music on different ocassions.
 - Generate snack for main character by eating snack health can increase.
 - Highest score with local storage.
 - Increase challenge level.
+
+## Backlog
+- level up features.
 - Add some animation in canvas on killing monsters like some blast effect and blood drops.
 
 ## Data structure

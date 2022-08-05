@@ -10,9 +10,14 @@ class MonsterType {
     }
 }
 
+// instantiate type of monsters one with demogorgen type and other demodog.
 const demogorgenType = new MonsterType("demogorgen", "assets/images/demogorgen-left.png", "assets/images/demogorgen-right.png", 150, 130, 100, 20);
 const demodogType = new MonsterType("demodog", "assets/images/demodog-left.png", "assets/images/demodog-right.png", 80, 80, 50, 10);
+
+// store monster types into array so can be generate randomly.
 const monsterTypes = [demogorgenType, demodogType];
+
+// store monster direction into array so can be generate randomly.
 const monsterDirection = ["right", "left"];
 
 class Monster {

@@ -20,33 +20,34 @@ const canvas = document.querySelector('canvas');
 canvas.width = screen.width;
 canvas.height = screen.height;
 const ctx = canvas.getContext('2d');
+
 let intervalId;
 let scoreIntervalId;
 let monsterCreateIntervalId;
 let snackIntervalId;
 let score;
 let highScore = localStorage.getItem('Highscore');
-let isGameOver = false;
 let powerBallsArr;
 let monstersArray;
+let isGameOver = false;
 let sound = false;
+let snack;
 
 // game platform
 let platformHeight = 100;
 let platformXPosition = 0;
 let platformYPosition = screen.height-platformHeight;
-
-
 const gamePlatformImage = new Image();
 gamePlatformImage.src = 'assets/images/game-platform.png';
 
+// game background
 const background = new Image();
 background.src = 'assets/images/background.jpg';
 
+// instantiate eleven object
 const eleven = new Eleven( canvas.width/2 - this.width/2, platformYPosition - this.height + 17);
 
-let snack;
-
+// reset game on game over screen.
 function resetGame() {
     isGameOver = false;
     powerBallsArr = [];
@@ -57,6 +58,7 @@ function resetGame() {
     eleven.reset(canvas.width, platformYPosition);
     snack = undefined;
 
+    // update music
     themeAudio.pause();
     gameAudio.currentTime = 0;
     gameAudio.play();
@@ -69,10 +71,13 @@ function resetGame() {
     // increases eleven's power every 2 seconds 
     eleven.setPowerInterval();
 
-    monsterCreateIntervalId1 = createMonsterInterval(3000)
-    monsterCreateIntervalId2 = createMonsterInterval(5000)
+    // generate random monster on every 3 seconds.
+    monsterCreateIntervalId1 = createMonsterInterval(3000);
 
-    // create monster every 3 seconds
+    // generate random monster on every 5 seconds.
+    monsterCreateIntervalId2 = createMonsterInterval(5000);
+
+    // create monster every 3 and 5 seconds and push into array, and move monsters.
     function createMonsterInterval(interval) {
         return setInterval(() => {
             let monster = createMonster();
@@ -90,28 +95,6 @@ function resetGame() {
     }, 20000);
 }
 
-function gameOver() {
-    gameOverAudio.play();
-    themeAudio.currentTime = 10;
-    themeAudio.play();
-    gameAudio.pause();
-    cancelAnimationFrame(intervalId);
-    clearInterval(scoreIntervalId);
-    // clear power interval
-    eleven.clearPowerInterval();
-    clearInterval(monsterCreateIntervalId1);
-    clearInterval(monsterCreateIntervalId2);
-    clearInterval(snackIntervalId);
-    // check highest score 
-    highScore = score > highScore ? score : highScore;
-    localStorage.setItem('Highscore', highScore);
-    canvas.style.display = "none";
-    mainGameScreen.style.display = "none";
-    startGameScreen.style.display = "none";
-    gameOverScreen.style.display = "flex";
-    displayFinalScore.innerText = computeSixDigitScore(score); 
-    displayHighestScore.innerHTML =  computeSixDigitScore(highScore);
-}
 
 function updateScoreDisplay() {
     ctx.fillStyle = "red";
@@ -123,6 +106,10 @@ function updateScoreDisplay() {
 function computeSixDigitScore(score) {
     score = "00000" + score;
     return score.slice(score.length-6, score.length);
+}
+
+function createMonster() {
+    return new Monster(canvas.width, platformYPosition);
 }
 
 function createPowerBall() {
@@ -141,10 +128,6 @@ function createPowerBall() {
     return new PowerBall(powerBallPositionX, eleven.yPosition, eleven.direction, eleven.strength);
 }
 
-function createMonster() {
-    return new Monster(canvas.width, platformYPosition);
-}
-
 function createSnack() {
     return new Snack(canvas.width);
 }
@@ -160,14 +143,42 @@ function playSoundOnStartScreen() {
     }
 }
 
+function gameOver() {
+    // update music
+    gameOverAudio.play();
+    themeAudio.currentTime = 10;
+    themeAudio.play();
+    gameAudio.pause();
+
+    // clear intervals
+    cancelAnimationFrame(intervalId);
+    clearInterval(scoreIntervalId);
+    eleven.clearPowerInterval();
+    clearInterval(monsterCreateIntervalId1);
+    clearInterval(monsterCreateIntervalId2);
+    clearInterval(snackIntervalId);
+
+    // check highest score and display score board
+    highScore = score > highScore ? score : highScore;
+    localStorage.setItem('Highscore', highScore);
+    displayFinalScore.innerText = computeSixDigitScore(score); 
+    displayHighestScore.innerHTML =  computeSixDigitScore(highScore);
+
+    // display game over screen and hide all other screens.
+    canvas.style.display = "none";
+    mainGameScreen.style.display = "none";
+    startGameScreen.style.display = "none";
+    gameOverScreen.style.display = "flex";
+}
+
 window.onload = () => {
-    // play start screen music and show only splash screen
+    //display only splash screen
     startGameScreen.style.display = "flex";
     mainGameScreen.style.display = "none";
     gameOverScreen.style.display = "none";
     canvas.style.display = "none";
-    
 
+    // play start screen music on button click
     musicBtn.addEventListener('click', playSoundOnStartScreen);
     
     // when start game btn click hide splash screen and go to main game screen
@@ -178,7 +189,7 @@ window.onload = () => {
         });    
     })
     
-    //   left right movement of eleven
+    // left right movement of eleven
     document.addEventListener("keydown", (event) => {
         if (event.code === "ArrowRight") {
             eleven.moveRight(canvas.width);
@@ -204,6 +215,9 @@ window.onload = () => {
         // draw game platform
         ctx.drawImage(gamePlatformImage, platformXPosition, platformYPosition, canvas.width, platformHeight);
 
+        // draw eleven character
+        eleven.draw();
+
         // update score 
         updateScoreDisplay();
 
@@ -213,29 +227,26 @@ window.onload = () => {
         // draw power bar
         eleven.updatePowerBar();
 
-        // draw eleven character
-        eleven.draw();
-
         // draw snack 
         if(snack != undefined) {
             ctx.drawImage(snack.image, snack.xPosition, snack.yPosition, snack.width, snack.height); 
+            // move snack from top to bottom.
             if (snack.yPosition + snack.height < platformYPosition) {
                 snack.yPosition++; 
             }
-            
+
+            // collision of eleven with snack, update health of eleven.
             if (
                 eleven.xPosition < snack.xPosition + snack.width - 50 && 
                 eleven.xPosition + eleven.width - 50 > snack.xPosition &&
                 eleven.yPosition < snack.yPosition + snack.height
                 ) {
-                    
                     if(eleven.health < 100) {
                         eleven.health += snack.refill;
                         if(eleven.health > 100) {
                             eleven.health = 100;
                         }
                     }
-                    
                 elevenEatingAudio.play();
                 snack = undefined;
             }
@@ -253,7 +264,6 @@ window.onload = () => {
             // if power ball is going to out of canvas width it should remove from array.
             if(powerBallsArr[i].xPosition + powerBallsArr[i].width < 0 || powerBallsArr[i].xPosition > canvas.width) {
                 powerBallsArr.splice(i,1);
-                // i--;
                 continue;
             }
 
@@ -265,6 +275,7 @@ window.onload = () => {
                 ) {
                     monstersArray[j].receiveAttack(powerBallsArr[i].strength);
                     powerBallsArr.splice(i, 1);
+                    // if monster health is zero then remove monster array.
                     if (monstersArray[j].health <= 0) {
                         monstersArray.splice(j, 1);
                         new Audio('assets/music/scream.wav').play();
@@ -294,6 +305,7 @@ window.onload = () => {
                     monstersArray[i].xPosition += 2;
                 }
 
+                // when monster attack to eleven
                 if (monstersArray[i].readyToAttack) {
                     eleven.receiveAttack(monstersArray[i].strength);
                     monstersArray[i].toggleReadyToAttack();
@@ -302,6 +314,7 @@ window.onload = () => {
                         monstersArray[i].toggleReadyToAttack();
                     }, 3000);
                     
+                    // game over when eleven's health zero on monster attack.
                     if (eleven.health <= 0) {
                         isGameOver = true;
                     }
@@ -309,10 +322,12 @@ window.onload = () => {
             }
         }
 
+        // update game/
         intervalId = requestAnimationFrame(updateGame);
+
+        // if game over then invoke game over function
         if (isGameOver) {
             gameOver();
         }
     }
-    
 };
