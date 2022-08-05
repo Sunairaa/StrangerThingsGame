@@ -36,10 +36,78 @@ Main objective of game is to kill monsters 👹, survive as long as you can and 
 - Main Game Screen
 - Game Over Screen
 
+## script.js
+- Script - build dom
+- Script - display splash screen
+- Script - addEventLisitener to start game.
+- Script - display game over screen.
+- Script - background image.
+- Script - design game platform.
+- Script - update game.
+- Script - collision between monster and eleven.
+- Script - collision between monster and power ball.
+- Script - update score.
+- Script - game reset.
+- Script - add different musics.
+- Script - collision between snack and Eleven.
+- Script - update Eleven health bar on snack eating.
+- Script - update highest score with local storage.
+
+## eleven.js
+- Eleven - draw.
+- Eleven - move right and left.
+- Eleven - receive attack from monsters.
+- Eleven - update health bar.
+- Eleven - update power bar.
+- Eleven - reset Eleven position on game reset.
+- Eleven - increase power bar after some specific time.
+- PowerBall - draw.
+- PowerBall - move powerball to attack monster.
+
+## monster.js
+- Monster - draw monster.
+- Monster - move monster.
+- MonsterType - generate 2 type of monster with some different properties.
+- Monter - generate monster randomly from left right side.
+- Monster - receive attack from eleven and update health.
+- Monster - ready to attack after some time.
+- Monster - follow main character by changing monster direction.
+
+## snack.js
+- Snack - draw snack.
 
 ## Task
-_Splash Screen_
-
+- Script - build dom
+- Script - display splash screen
+- Script - addEventLisitener to start game.
+- Script - display game over screen.
+- Script - background image.
+- Script - design game platform.
+- Eleven - draw.
+- Eleven - move right and left.
+- Script - update game.
+- Monster - draw monster.
+- Monster - move monster.
+- MonsterType - generate 2 type of monster with some different properties.
+- Monter - generate monster randomly from left right side.
+- Script - collision between monster and eleven.
+- Eleven - receive attack from monsters.
+- Eleven - update health bar.
+- PowerBall - draw.
+- PowerBall - move powerball to attack monster.
+- Script - collision between monster and power ball.
+- Monster - receive attack from eleven and update health.
+- Eleven - update power bar.
+- Monster - ready to attack after some time.
+- Monster - follow main character by changing monster direction.
+- Eleven - increase power bar after some specific time.
+- Script - update score.
+- Script - game reset.
+- Script - add different musics.
+- Snack - draw snack.
+- Script - collision between snack and Eleven.
+- Script - update Eleven health bar on snack eating.
+- Script - update highest score with local storage.
 
 ## Links
 - [Slides Link](https://docs.google.com/presentation/d/13M787YMHfDrreWaY82At0WEf3GRoNBwacFrZPdh-LwA/edit?usp=sharing)
