@@ -7,6 +7,8 @@ Main objective of game is to kill monsters 👹, survive as long as you can and 
 
 ## MVP
 - Design splash screen with start game button.
+- Draw canvas for game scree.
+- Draw game platform.
 - Draw main character named Eleven.
 - Generate randomly 2 types of monsters they may come randomly from left or right direction.
 - Eleven can kill monster with power ball ball.
@@ -40,6 +42,8 @@ Main objective of game is to kill monsters 👹, survive as long as you can and 
 - Script - build dom
 - Script - display splash screen
 - Script - addEventLisitener to start game.
+- Script - draw canvas.
+- Script - draw game platform.
 - Script - display game over screen.
 - Script - background image.
 - Script - design game platform.
