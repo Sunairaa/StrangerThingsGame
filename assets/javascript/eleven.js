@@ -101,9 +101,9 @@ class PowerBall {
 
     move() {
         if(this.direction === "right") {
-            this.xPosition += 3;
+            this.xPosition += 5;
         } else {
-            this.xPosition -= 3;
+            this.xPosition -= 5;
         }
     }
 }
